@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANSWERIT</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .login-form input {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .login-form button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .loader {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            animation: blink 1s infinite;
+            display: none;
+        }
+
+        .surprise {
+            display: none;
+            animation: fadeIn 2s forwards, scaleUpRotate 2s forwards;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleUpRotate {
+            0% {
+                transform: scale(0) rotate(0deg);
+            }
+            100% {
+                transform: scale(1) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form class="login-form" id="loginForm">
+            <input type="text" id="FULLNAME" placeholder="FULLNAME" required>
+            <input type="text" id="AGE" placeholder="AGE" required>
+            <button type="submit">Log In</button>
+        </form>
+        <div class="loader" id="loader">Loading... |</div>
+        <div class="surprise" id="surprise">
+            <img src="images/pakyu.png" alt="pakyut" width="400">
+            <h1>CONGRATS! DAHIL JAN PAKYU KA</h1>
+        </div>
+    </div>
+
+    <script>
+        function loadingAnimation(duration) {
+            const loader = document.getElementById('loader');
+            const animation = ['|', '/', '-', '\\'];
+            let idx = 0;
+
+            const interval = setInterval(() => {
+                loader.textContent = `Loading... ${animation[idx % animation.length]}`;
+                idx++;
+            }, 100);
+
+            setTimeout(() => {
+                clearInterval(interval);
+                loader.style.animation = 'fadeOut 1s forwards';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    document.getElementById('surprise').style.display = 'block';
+                }, 1000);
+            }, duration * 1000);
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            document.getElementById('loginForm').style.display = 'none';
+            const loader = document.getElementById('loader');
+            loader.style.display = 'block';
+            loadingAnimation(5); // Adjust the duration as needed
+        });
+    </script>
+</body>
+</html>
